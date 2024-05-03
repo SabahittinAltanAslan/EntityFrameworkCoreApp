@@ -32,6 +32,11 @@ namespace EntityFrameworkCoreApp.Data.Contexts
             //modelBuilder.Entity<Product>().HasMany(x => x.SaleHistories)
             //    .WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
 
+            modelBuilder.Entity<Employee>().ToTable("Employees");
+            modelBuilder.Entity<FullTimeEmployee>().ToTable("FullTimeEmployees");
+            modelBuilder.Entity<PartTimeEmployee>().ToTable("PartTimeEmployees");
+
+
             modelBuilder.Entity<ProductCategory>().HasKey(x => new {x.ProductId,x.CategoryId});
 
             modelBuilder.Entity<Product>().HasMany(x => x.ProductCategories)
