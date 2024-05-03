@@ -4,6 +4,7 @@ using EntityFrameworkCoreApp.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkCoreApp.Migrations
 {
     [DbContext(typeof(UdemyContext))]
-    partial class UdemyContextModelSnapshot : ModelSnapshot
+    [Migration("20240503134352_ManyToMany")]
+    partial class ManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,36 +63,6 @@ namespace EntityFrameworkCoreApp.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("EntityFrameworkCoreApp.Data.Entities.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Employee");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("EntityFrameworkCoreApp.Data.Entities.Product", b =>
@@ -182,26 +155,6 @@ namespace EntityFrameworkCoreApp.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("SaleHistories");
-                });
-
-            modelBuilder.Entity("EntityFrameworkCoreApp.Data.Entities.FullTimeEmployee", b =>
-                {
-                    b.HasBaseType("EntityFrameworkCoreApp.Data.Entities.Employee");
-
-                    b.Property<decimal>("HourlyWage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("FullTimeEmployee");
-                });
-
-            modelBuilder.Entity("EntityFrameworkCoreApp.Data.Entities.PartTimeEmployee", b =>
-                {
-                    b.HasBaseType("EntityFrameworkCoreApp.Data.Entities.Employee");
-
-                    b.Property<decimal>("DailyWage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasDiscriminator().HasValue("PartTimeEmployee");
                 });
 
             modelBuilder.Entity("EntityFrameworkCoreApp.Data.Entities.ProductCategory", b =>
